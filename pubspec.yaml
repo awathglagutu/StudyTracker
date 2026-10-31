@@ -1,0 +1,28 @@
+name: study_tracker_source_code
+description: A Flutter study tracker application.
+publish_to: none
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  sqflite: ^2.3.0
+  path: ^1.9.0
+  flutter_db_inspector: ^2.0.0
+  flutter_db_inspector_sqlite: ^2.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_launcher_icons: ^0.13.1
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: false
+  image_path: "assets/app_icon.jpg"
+
+flutter:
+  uses-material-design: true
