@@ -25,7 +25,7 @@ class _MainScreenState extends State<MainScreen> {
   int _totalCount = 0;
   int _nonFavoriteCount = 0;
   int _totalMinutes = 0;
-  bool _isLoading = true;
+  bool _isLoading = false;
 
   int get _pageCount => (_totalCount + _pageSize - 1) ~/ _pageSize;
 
@@ -40,10 +40,13 @@ class _MainScreenState extends State<MainScreen> {
     _refreshPage(goToFirstPage: true);
   }
 
-  Future<void> _refreshPage({bool goToFirstPage = false}) async {
+  Future<void> _refreshPage({
+    bool goToFirstPage = false,
+    bool showLoading = false,
+  }) async {
     if (!mounted) return;
     final refreshStartedAt = DateTime.now();
-    setState(() => _isLoading = true);
+    if (showLoading) setState(() => _isLoading = true);
 
     try {
       final count = await _database.getSessionsCount();
@@ -60,10 +63,12 @@ class _MainScreenState extends State<MainScreen> {
         limit: _pageSize,
       );
 
-      final remainingLoadingTime = const Duration(milliseconds: 1500) -
-          DateTime.now().difference(refreshStartedAt);
-      if (remainingLoadingTime > Duration.zero) {
-        await Future<void>.delayed(remainingLoadingTime);
+      if (showLoading) {
+        final remainingLoadingTime = const Duration(seconds: 1) -
+            DateTime.now().difference(refreshStartedAt);
+        if (remainingLoadingTime > Duration.zero) {
+          await Future<void>.delayed(remainingLoadingTime);
+        }
       }
 
       if (!mounted) return;
@@ -74,16 +79,18 @@ class _MainScreenState extends State<MainScreen> {
         _sessions
           ..clear()
           ..addAll(sessions);
-        _isLoading = false;
+        if (showLoading) _isLoading = false;
       });
     } catch (error) {
-      final remainingLoadingTime = const Duration(milliseconds: 1500) -
-          DateTime.now().difference(refreshStartedAt);
-      if (remainingLoadingTime > Duration.zero) {
-        await Future<void>.delayed(remainingLoadingTime);
+      if (showLoading) {
+        final remainingLoadingTime = const Duration(seconds: 1) -
+            DateTime.now().difference(refreshStartedAt);
+        if (remainingLoadingTime > Duration.zero) {
+          await Future<void>.delayed(remainingLoadingTime);
+        }
       }
       if (!mounted) return;
-      setState(() => _isLoading = false);
+      if (showLoading) setState(() => _isLoading = false);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Could not load study sessions: $error')),
       );
@@ -381,7 +388,7 @@ class _MainScreenState extends State<MainScreen> {
           IconButton(
             icon: const Icon(Icons.refresh),
             tooltip: 'Refresh study sessions',
-            onPressed: () => _refreshPage(),
+            onPressed: () => _refreshPage(showLoading: true),
           ),
           if (_titleTapCount >= 7)
             IconButton(
