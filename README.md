@@ -3,7 +3,7 @@
 A simple, offline Flutter app for logging study sessions by **subject** and **duration**, built for university students (especially fellow UUM students) who want to see where their study time goes.
 
 > **Course / Assignment:** _(STTPK2143)_
-> **Author:** _(Put your name and matric number here)_
+> **Author:** _(307106)_
 
 ---
 
@@ -51,9 +51,10 @@ University students handle lectures, assignments, labs and exams across many sub
 
 | # | Screen | Placeholder |
 |---|--------|-------------|
-| 1 | Splash screen | _(<img width="1080" height="2400" alt="image" src="https://github.com/user-attachments/assets/572891a7-1228-457d-b2ff-4fece0579990" />
-)_ |
-| 2 | Empty home state | _(Put image of the empty home screen here.)_ |
+| 1 | Splash screen | <img width="1080" height="2400" alt="image" src="https://github.com/user-attachments/assets/572891a7-1228-457d-b2ff-4fece0579990" />
+|
+| 2 | Empty home state |<img width="1080" height="2400" alt="image" src="https://github.com/user-attachments/assets/c10b4024-466a-4ef3-9c8e-4b8ace184626" />
+|
 | 3 | Populated session list | _(Put image of the home screen with sessions here.)_ |
 | 4 | Add form with inputs | _(Put image of the filled-in form here.)_ |
 | 5 | Validation errors | _(Put image of the form showing error messages here.)_ |
