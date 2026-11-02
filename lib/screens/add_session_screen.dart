@@ -48,8 +48,28 @@ class _AddSessionScreenState extends State<AddSessionScreen> {
     super.dispose();
   }
 
-  void _saveSession() {
+  Future<void> _saveSession() async {
     if (!_formKey.currentState!.validate()) return;
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: const Text('Confirm save'),
+        content: Text(_isEditing
+            ? 'Are you sure you want to save these changes?'
+            : 'Are you sure you want to save this study session?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(false),
+            child: const Text('Cancel'),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.of(dialogContext).pop(true),
+            child: const Text('Save'),
+          ),
+        ],
+      ),
+    );
+    if (confirmed != true || !mounted) return;
     final session = StudySession(
       id: widget.sessionToEdit?.id,
       title: _titleController.text.trim(),

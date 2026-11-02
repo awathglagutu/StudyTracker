@@ -42,6 +42,7 @@ class _MainScreenState extends State<MainScreen> {
 
   Future<void> _refreshPage({bool goToFirstPage = false}) async {
     if (!mounted) return;
+    final refreshStartedAt = DateTime.now();
     setState(() => _isLoading = true);
 
     try {
@@ -59,6 +60,12 @@ class _MainScreenState extends State<MainScreen> {
         limit: _pageSize,
       );
 
+      final remainingLoadingTime = const Duration(milliseconds: 1500) -
+          DateTime.now().difference(refreshStartedAt);
+      if (remainingLoadingTime > Duration.zero) {
+        await Future<void>.delayed(remainingLoadingTime);
+      }
+
       if (!mounted) return;
       setState(() {
         _totalCount = count;
@@ -70,6 +77,11 @@ class _MainScreenState extends State<MainScreen> {
         _isLoading = false;
       });
     } catch (error) {
+      final remainingLoadingTime = const Duration(milliseconds: 1500) -
+          DateTime.now().difference(refreshStartedAt);
+      if (remainingLoadingTime > Duration.zero) {
+        await Future<void>.delayed(remainingLoadingTime);
+      }
       if (!mounted) return;
       setState(() => _isLoading = false);
       ScaffoldMessenger.of(context).showSnackBar(
@@ -96,8 +108,20 @@ class _MainScreenState extends State<MainScreen> {
       MaterialPageRoute(builder: (_) => const AddSessionScreen()),
     );
     if (session == null || !mounted) return;
-    await _database.insertSession(session);
-    await _refreshPage(goToFirstPage: true);
+    try {
+      await _database.insertSession(session);
+      if (!mounted) return;
+      await _refreshPage(goToFirstPage: true);
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Study session saved successfully.')),
+      );
+    } catch (error) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Could not save study session: $error')),
+      );
+    }
   }
 
   Future<void> _editSession(int index) async {
@@ -109,8 +133,20 @@ class _MainScreenState extends State<MainScreen> {
     );
 
     if (updatedSession == null || !mounted) return;
-    await _database.updateSession(updatedSession);
-    await _refreshPage();
+    try {
+      await _database.updateSession(updatedSession);
+      if (!mounted) return;
+      await _refreshPage();
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Study session updated successfully.')),
+      );
+    } catch (error) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Could not update study session: $error')),
+      );
+    }
   }
 
   Future<bool> _confirmDelete(int index) async {
@@ -175,6 +211,14 @@ class _MainScreenState extends State<MainScreen> {
         ),
         actions: [
           TextButton(onPressed: () => Navigator.of(context).pop(), child: const Text('Close')),
+          FilledButton.icon(
+            icon: const Icon(Icons.edit_rounded),
+            label: const Text('Edit'),
+            onPressed: () {
+              Navigator.of(context).pop();
+              _editSession(index);
+            },
+          ),
         ],
       ),
     );
@@ -334,6 +378,11 @@ class _MainScreenState extends State<MainScreen> {
           child: const Text('Study Tracker'),
         ),
         actions: [
+          IconButton(
+            icon: const Icon(Icons.refresh),
+            tooltip: 'Refresh study sessions',
+            onPressed: () => _refreshPage(),
+          ),
           if (_titleTapCount >= 7)
             IconButton(
               icon: const Icon(Icons.bug_report_rounded),
