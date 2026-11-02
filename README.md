@@ -45,34 +45,6 @@ University students handle lectures, assignments, labs and exams across many sub
 
 ---
 
-## Screenshots
-
-> Replace each placeholder with your own screenshot. Suggested folder: `assets/screenshots/`.
-
-| # | Screen | Placeholder |
-|---|--------|-------------|
-| 1 | Splash screen | <img width="1080" height="2400" alt="image" src="https://github.com/user-attachments/assets/572891a7-1228-457d-b2ff-4fece0579990" />
-|
-| 2 | Empty home state |<img width="1080" height="2400" alt="image" src="https://github.com/user-attachments/assets/c10b4024-466a-4ef3-9c8e-4b8ace184626" />
-|
-| 3 | Populated session list | _(Put image of the home screen with sessions here.)_ |
-| 4 | Add form with inputs | _(Put image of the filled-in form here.)_ |
-| 5 | Validation errors | _(Put image of the form showing error messages here.)_ |
-| 6 | Save confirmation dialog | _(Put image of the "Confirm save" dialog here.)_ |
-| 7 | Feedback message | _(Put image of the "saved successfully" SnackBar here.)_ |
-| 8 | Details view | _(Put image of the details dialog here.)_ |
-| 9 | Prefilled edit form | _(Put image of the edit screen here.)_ |
-| 10 | Delete confirmation | _(Put image of the delete dialog here.)_ |
-| 11 | Pagination controls | _(Put image of the "Page X of Y" controls here.)_ |
-
-Once you have the images, embed them like this:
-
-```markdown
-![Splash Screen](assets/screenshots/01_splash.png)
-```
-
----
-
 ## Tech Stack
 
 | Component | Technology |
@@ -242,24 +214,6 @@ Available subjects: **Mathematics, Science, English, History, Computer Science, 
 
 ---
 
-## Assets
-
-| Asset | Location | Notes |
-|---|---|---|
-| Screenshots | `assets/screenshots/` | Add your own images here |
-| App icon | _(Put path or description here)_ | The app uses Material icons (`auto_stories_rounded`) for its logo |
-| Demo video / GIF | _(Put link or path here)_ | Optional |
-
-If you add image assets, register them in `pubspec.yaml`:
-
-```yaml
-flutter:
-  assets:
-    - assets/screenshots/
-```
-
----
-
 ## Known Limitations
 
 - Data is stored only on the device, with no cloud sync or backup.
@@ -276,6 +230,3 @@ flutter:
 
 ---
 
-## License
-
-_(Add your license here, or remove this section.)_
