@@ -10,16 +10,14 @@ A simple, offline Flutter app for logging study sessions by **subject** and **du
 ## Table of Contents
 1. [Overview](#overview)
 2. [Features](#features)
-3. [Screenshots](#screenshots)
-4. [Tech Stack](#tech-stack)
-5. [Project Structure](#project-structure)
-6. [Getting Started](#getting-started)
-7. [User Guide (Tutorials)](#user-guide-tutorials)
-8. [Database Design](#database-design)
-9. [Validation Rules](#validation-rules)
-10. [Hidden and Debug Features](#hidden-and-debug-features)
-11. [Assets](#assets)
-12. [Known Limitations](#known-limitations)
+3. [Tech Stack](#tech-stack)
+4. [Project Structure](#project-structure)
+5. [Getting Started](#getting-started)
+6. [User Guide (Tutorials)](#user-guide-tutorials)
+7. [Database Design](#database-design)
+8. [Validation Rules](#validation-rules)
+9. [Hidden and Debug Features](#hidden-and-debug-features)
+10. [Known Limitations](#known-limitations)
 
 ---
 
